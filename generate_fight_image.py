@@ -19,7 +19,7 @@ from get_flights import get_closest_flights, parse_aircraft_data, get_config_war
 
 
 class IntegratedFlightDisplayGenerator:
-    def __init__(self, output_filename="flight_display.png"):
+    def __init__(self, output_filename="curr_flight.png"):
         self.output_filename = output_filename
         self.server_process = None
         self.port = 3000

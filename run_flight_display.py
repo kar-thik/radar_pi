@@ -20,7 +20,7 @@ if __name__ == "__main__":
     print("This will:")
     print("1. Fetch live flight data from nearby aircraft")
     print("2. Generate a visual display image")
-    print("3. Save the result as 'flight_display.png'")
+    print("3. Save the result as 'curr_flight.png'")
     print()
     
     try:

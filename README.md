@@ -65,7 +65,7 @@ This will:
 - Pass real flight data to the display components
 - Start a local development server
 - Render the live flight information display using headless Chrome
-- Capture a screenshot as `flight_display.png`
+- Capture a screenshot as `curr_flight.png`
 - Automatically clean up temporary files and server
 
 ### Static Flight Display Image Generation
