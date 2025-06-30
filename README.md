@@ -46,9 +46,31 @@ get_flights.print_flight_info(flight_data)
 flight_data = get_flights.get_closest_flights(lat=40.7128, lon=-74.0060, radius=15)
 ```
 
-### Flight Display Image Generation
+### Integrated Flight Display Generation (Recommended)
 
-Generate a visual 800×480px flight information display:
+Generate a live flight information display with real-time data:
+
+```bash
+python run_flight_display.py
+```
+
+Or use the integrated module directly:
+```bash
+python integrated_flight_display.py
+```
+
+This will:
+- Fetch live flight data from nearby aircraft using ADS-B Exchange API
+- Create a Next.js project with dynamic React components
+- Pass real flight data to the display components
+- Start a local development server
+- Render the live flight information display using headless Chrome
+- Capture a screenshot as `flight_display.png`
+- Automatically clean up temporary files and server
+
+### Static Flight Display Image Generation
+
+Generate a visual 800×480px flight information display with static data:
 
 ```bash
 python generate_image.py
@@ -64,7 +86,8 @@ This will:
 The generated image includes:
 - Flight number, aircraft model, and registration
 - Ground speed in knots
-- Last updated timestamp
+- Number of nearby aircraft
+- Data timestamp and current time
 - Clean, modern light-themed interface
 - Exact 800×480 pixel dimensions
 
@@ -89,17 +112,22 @@ The generated image includes:
 
 ```
 radar_pi/
-├── get_flights.py          # Flight tracking module
-├── generate_image.py       # Image generation script
-├── config.py.example       # Configuration template
-├── requirements.txt        # Python dependencies
-├── package.json           # Node.js dependencies
-├── app/                   # Next.js application
-│   ├── layout.tsx         # Root layout component
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles
-└── components/            # React components
-    └── flight-info-display.tsx  # Flight display component
+├── get_flights.py                    # Flight tracking module
+├── generate_image.py                 # Static image generation script
+├── integrated_flight_display.py     # Live flight display generator
+├── run_flight_display.py            # Simple runner script
+├── config.py.example                # Configuration template
+├── requirements.txt                  # Python dependencies
+├── package.json                      # Node.js dependencies
+├── app/                              # Next.js application
+│   ├── layout.tsx                    # Root layout component
+│   ├── page.tsx                      # Dynamic home page
+│   ├── globals.css                   # Global styles
+│   └── api/                          # API routes
+│       └── flight-data/
+│           └── route.ts              # Flight data API endpoint
+└── components/                       # React components
+    └── flight-info-display.tsx      # Enhanced flight display component
 ```
 
 ## Dependencies
