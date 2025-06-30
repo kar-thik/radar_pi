@@ -26,6 +26,9 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# Generated images
+*.png
+
 # Local env
 .env
 secrets.env
