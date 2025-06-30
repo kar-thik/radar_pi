@@ -1,0 +1,9 @@
+# Configuration file for flight tracking parameters
+# Copy this file to 'config.py' and update with your desired coordinates
+
+# Coordinates for flight search (example: Washington DC area)
+LATITUDE = 38.89580240857114
+LONGITUDE = -77.09308316546287
+
+# Search radius in nautical miles
+RADIUS = 10 
