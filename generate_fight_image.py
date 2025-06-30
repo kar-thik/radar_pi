@@ -107,7 +107,7 @@ class IntegratedFlightDisplayGenerator:
             )
             
             # Wait for server to start
-            max_wait = 30  # seconds
+            max_wait = 40  # seconds
             start_time = time.time()
             
             while time.time() - start_time < max_wait:
