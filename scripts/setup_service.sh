@@ -49,24 +49,16 @@ echo "Service setup is complete. It will now run on boot."
 echo "You can check the service status with: sudo systemctl status ${SERVICE_NAME}.service"
 
 # Set default refresh period in minutes, or use the first argument if provided
-REFRESH_PERIOD=${1:-4}
+REFRESH_PERIOD=${1:-2}
 
 # Setup cronjob for refreshing
 echo "Setting up cronjob to refresh flight data every ${REFRESH_PERIOD} minutes..."
 LOG_FILE="${PROJECT_DIR}/radar.log"
 CRON_JOB="*/${REFRESH_PERIOD} * * * * cd ${PROJECT_DIR} && /bin/bash ${RUN_SCRIPT} >> ${LOG_FILE} 2>&1"
-TEMP_CRON_FILE=$(mktemp)
 
-# Safely add the cronjob, avoiding duplicates
-crontab -l > "${TEMP_CRON_FILE}" 2>/dev/null
-if ! grep -q "${RUN_SCRIPT}" "${TEMP_CRON_FILE}"; then
-    echo "${CRON_JOB}" >> "${TEMP_CRON_FILE}"
-    crontab "${TEMP_CRON_FILE}"
-    echo "Cronjob added."
-else
-    echo "Cronjob already exists. No changes made."
-fi
-rm "${TEMP_CRON_FILE}"
+# Remove any existing cron job for this script and add the new one.
+# This ensures that we can update the cronjob definition.
+(crontab -l 2>/dev/null | grep -v -F "${RUN_SCRIPT}" ; echo "${CRON_JOB}") | crontab -
 
 echo "Cronjob setup is complete."
 echo "You can view your cronjobs with: crontab -l"
