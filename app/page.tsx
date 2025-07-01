@@ -2,17 +2,7 @@
 
 import FlightInfoDisplay from "@/components/flight-info-display"
 import { useEffect, useState } from "react"
-
-interface FlightData {
-  flightNumber: string
-  model: string
-  registration: string
-  groundSpeed: number
-  altitude?: string | number
-  lastUpdated?: string
-  totalAircraft?: number
-  error?: string
-}
+import { FlightData } from "@/types/flight"
 
 export default function Home() {
   const [flightData, setFlightData] = useState<FlightData>({

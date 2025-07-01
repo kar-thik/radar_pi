@@ -1,15 +1,6 @@
 import type React from "react"
 import { ArrowRight, Plane, Clock, Users } from "lucide-react"
-
-interface FlightInfoDisplayProps {
-  flightNumber: string
-  model: string
-  registration: string
-  groundSpeed: number
-  loading?: boolean
-  totalAircraft?: number
-  lastUpdated?: string
-}
+import { FlightInfoDisplayProps } from "@/types/flight"
 
 export default function FlightInfoDisplay({ 
   flightNumber, 
