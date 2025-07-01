@@ -49,7 +49,7 @@ echo "Service setup is complete. It will now run on boot."
 echo "You can check the service status with: sudo systemctl status ${SERVICE_NAME}.service"
 
 # Set default refresh period in minutes, or use the first argument if provided
-REFRESH_PERIOD=${1:-4}
+REFRESH_PERIOD=${1:-2}
 
 # Setup cronjob for refreshing
 echo "Setting up cronjob to refresh flight data every ${REFRESH_PERIOD} minutes..."
