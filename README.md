@@ -24,7 +24,7 @@ This guide assumes you've already set up your Raspberry Pi and have installed th
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/radar-pi.git
+    git clone https://github.com/kar-thik/radar-pi.git
     cd radar-pi
     ```
 
