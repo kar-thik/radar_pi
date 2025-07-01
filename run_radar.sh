@@ -5,6 +5,10 @@
 echo "🎯 Starting Complete Radar Pi Workflow..."
 echo "=" * 50
 
+# Step 0: Activate the Pimoroni virtual environment
+echo "🔄 Activating Pimoroni virtual environment..."
+source ~/.virtualenvs/pimoroni/bin/activate
+
 # Step 1: Generate flight display
 echo "📡 Fetching flight data and generating display..."
 python scripts/radar_display.py
