@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-"""
-Command-line interface for flight tracking.
-
-This script provides a simple way to fetch and display flight information
-from the command line.
-"""
-
 import sys
 import os
 import argparse
@@ -18,7 +11,6 @@ from src.config.settings import get_settings
 
 
 def main():
-    """Main entry point for flight tracker CLI."""
     parser = argparse.ArgumentParser(
         description="Fetch and display nearby aircraft information",
         formatter_class=argparse.RawDescriptionHelpFormatter,

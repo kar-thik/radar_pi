@@ -1,10 +1,3 @@
-"""
-Flight service for handling all flight data operations.
-
-This service combines flight data fetching and parsing into a single
-high-level interface.
-"""
-
 from typing import Optional
 from ..config.settings import Settings, get_config_warning
 from ..flight.data_fetcher import FlightDataFetcher
@@ -13,15 +6,7 @@ from ..flight.models import FlightData
 
 
 class FlightService:
-    """High-level service for flight data operations."""
-    
     def __init__(self, settings: Optional[Settings] = None):
-        """
-        Initialize the flight service.
-        
-        Args:
-            settings: Configuration settings. If None, will load from config.
-        """
         self.settings = settings or Settings()
         self.fetcher = FlightDataFetcher(self.settings)
         self.parser = FlightDataParser(self.settings)
@@ -33,18 +18,6 @@ class FlightService:
         radius: Optional[int] = None,
         show_warning: bool = True
     ) -> Optional[FlightData]:
-        """
-        Get parsed flight data for the specified area.
-        
-        Args:
-            lat: Latitude. Defaults to settings value.
-            lon: Longitude. Defaults to settings value.
-            radius: Search radius in nautical miles. Defaults to settings value.
-            show_warning: Whether to show configuration warnings.
-        
-        Returns:
-            FlightData object or None if no data available.
-        """
         # Show config warning if requested
         if show_warning:
             warning = get_config_warning()
@@ -86,18 +59,10 @@ class FlightService:
         show_raw: bool = False,
         **kwargs
     ) -> None:
-        """
-        Print flight information to console.
-        
-        Args:
-            flight_data: Flight data to print. If None, will fetch new data.
-            show_raw: Whether to show raw data.
-            **kwargs: Additional arguments passed to get_flight_data.
-        """
         if flight_data is None:
             flight_data = self.get_flight_data(**kwargs)
         
         if flight_data:
             self.parser.print_flight_info(flight_data, show_raw)
         else:
-            print("No flight data available.") 
+            print("No flight data available.")

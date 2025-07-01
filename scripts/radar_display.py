@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-"""
-Radar Pi Flight Display System - Main Entry Point
-
-This script runs the complete radar system: fetches flight data and generates
-visual display images for e-ink displays.
-"""
-
 import sys
 import os
 import argparse
@@ -19,7 +12,6 @@ from src.config.settings import get_settings
 
 
 def main():
-    """Main entry point for radar display system."""
     parser = argparse.ArgumentParser(
         description="Generate flight display images for radar monitoring",
         formatter_class=argparse.RawDescriptionHelpFormatter,

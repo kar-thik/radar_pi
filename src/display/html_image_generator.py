@@ -1,10 +1,3 @@
-"""
-HTML-based image generation module for flight displays.
-
-This module uses simple HTML templates and Playwright to generate
-images for e-ink displays without the complexity of Next.js.
-"""
-
 import asyncio
 import subprocess
 import sys
@@ -19,26 +12,12 @@ from ..flight.models import FlightData
 
 
 class HTMLImageGenerator:
-    """Generates flight display images using HTML templates."""
-    
     def __init__(self, settings: Settings):
-        """
-        Initialize the HTML image generator.
-        
-        Args:
-            settings: Configuration settings object
-        """
         self.settings = settings
         self._playwright_installed = False
         self.template_path = Path(__file__).parent.parent.parent / "templates" / "flight_display.html"
     
     def _check_dependencies(self) -> bool:
-        """
-        Check if required dependencies are available and install if needed.
-        
-        Returns:
-            bool: True if dependencies are available, False otherwise
-        """
         # Check Playwright
         try:
             import playwright
@@ -63,15 +42,6 @@ class HTMLImageGenerator:
         return True
     
     def _load_template(self) -> str:
-        """
-        Load the HTML template from file.
-        
-        Returns:
-            str: HTML template content
-        
-        Raises:
-            FileNotFoundError: If template file doesn't exist
-        """
         if not self.template_path.exists():
             raise FileNotFoundError(f"Template not found: {self.template_path}")
         
@@ -79,16 +49,6 @@ class HTMLImageGenerator:
             return f.read()
     
     def _populate_template(self, template: str, flight_data: FlightData) -> str:
-        """
-        Populate the HTML template with flight data.
-        
-        Args:
-            template: HTML template string
-            flight_data: FlightData object containing aircraft information
-        
-        Returns:
-            str: HTML with populated data
-        """
         # Get primary aircraft
         aircraft = flight_data.primary_aircraft
         
@@ -132,29 +92,11 @@ class HTMLImageGenerator:
         return populated_html
     
     def _create_temp_html(self, populated_html: str) -> str:
-        """
-        Create a temporary HTML file with populated data.
-        
-        Args:
-            populated_html: HTML content with flight data
-        
-        Returns:
-            str: Path to temporary HTML file
-        """
         with tempfile.NamedTemporaryFile(mode='w', suffix='.html', delete=False, encoding='utf-8') as f:
             f.write(populated_html)
             return f.name
     
     async def _capture_screenshot(self, html_file_path: str) -> bool:
-        """
-        Capture a screenshot of the HTML file.
-        
-        Args:
-            html_file_path: Path to the HTML file to capture
-        
-        Returns:
-            bool: True if successful, False otherwise
-        """
         print("📸 Capturing screenshot from HTML template...")
         
         async with async_playwright() as p:
@@ -193,15 +135,6 @@ class HTMLImageGenerator:
                     await browser.close()
     
     async def generate_image(self, flight_data: FlightData) -> bool:
-        """
-        Generate flight display image from flight data using HTML template.
-        
-        Args:
-            flight_data: FlightData object containing aircraft information
-        
-        Returns:
-            bool: True if image was generated successfully, False otherwise
-        """
         print("🎯 Generating flight display image from HTML template...")
         
         temp_html_path = None
@@ -247,13 +180,4 @@ class HTMLImageGenerator:
                     print(f"⚠️  Failed to clean up temp file: {e}")
     
     def generate_image_sync(self, flight_data: FlightData) -> bool:
-        """
-        Synchronous wrapper for generate_image.
-        
-        Args:
-            flight_data: FlightData object containing aircraft information
-        
-        Returns:
-            bool: True if image was generated successfully, False otherwise
-        """
-        return asyncio.run(self.generate_image(flight_data)) 
+        return asyncio.run(self.generate_image(flight_data))

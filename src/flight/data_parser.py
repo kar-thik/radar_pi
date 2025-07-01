@@ -1,10 +1,3 @@
-"""
-Flight data parser for processing raw API responses.
-
-This module handles parsing and validation of flight data from various
-API response formats.
-"""
-
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 
@@ -13,15 +6,7 @@ from ..config.settings import Settings
 
 
 class FlightDataParser:
-    """Handles parsing and validation of flight data from API responses."""
-    
     def __init__(self, settings: Settings):
-        """
-        Initialize the flight data parser.
-        
-        Args:
-            settings: Configuration settings object
-        """
         self.settings = settings
     
     def parse_api_response(
@@ -31,18 +16,6 @@ class FlightDataParser:
         search_lon: float,
         search_radius: int
     ) -> Optional[FlightData]:
-        """
-        Parse API response and return structured flight data.
-        
-        Args:
-            response_data: Raw API response data
-            search_lat: Search latitude used
-            search_lon: Search longitude used  
-            search_radius: Search radius used
-        
-        Returns:
-            FlightData object or None if parsing fails
-        """
         if not response_data:
             return None
         
@@ -72,15 +45,6 @@ class FlightDataParser:
         )
     
     def _extract_aircraft_list(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-        Extract aircraft list from API response, handling different formats.
-        
-        Args:
-            data: API response data
-        
-        Returns:
-            List of aircraft data dictionaries
-        """
         if not isinstance(data, dict):
             return []
         
@@ -95,15 +59,6 @@ class FlightDataParser:
         return aircraft_list if isinstance(aircraft_list, list) else []
     
     def format_aircraft_info(self, aircraft: Aircraft) -> str:
-        """
-        Format aircraft information into a readable string.
-        
-        Args:
-            aircraft: Aircraft object to format
-        
-        Returns:
-            Formatted aircraft information string
-        """
         return aircraft.format_info()
     
     def print_flight_info(
@@ -111,13 +66,6 @@ class FlightDataParser:
         flight_data: FlightData, 
         show_raw: bool = False
     ) -> None:
-        """
-        Print formatted flight information to console.
-        
-        Args:
-            flight_data: FlightData object to display
-            show_raw: Whether to show raw data
-        """
         print("✈️  Nearby Aircraft:")
         print("-" * 50)
         
@@ -135,4 +83,4 @@ class FlightDataParser:
         print(f"\nTotal aircraft nearby: {flight_data.total_count}")
         print(f"Search area: {flight_data.search_latitude}, {flight_data.search_longitude} "
               f"(radius: {flight_data.search_radius} nm)")
-        print(f"Last updated: {flight_data.timestamp.strftime('%Y-%m-%d %H:%M:%S')}") 
+        print(f"Last updated: {flight_data.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")

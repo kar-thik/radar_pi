@@ -1,10 +1,3 @@
-"""
-Configuration settings for the Radar Pi system.
-
-This module handles all configuration including coordinates, API settings,
-and display parameters.
-"""
-
 import os
 from typing import Optional
 from dataclasses import dataclass
@@ -12,8 +5,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Settings:
-    """Configuration settings for the Radar Pi system."""
-    
     # Default coordinates (Washington DC area)
     latitude: float = 38.89580240857114
     longitude: float = -77.09308316546287
@@ -38,15 +29,6 @@ class Settings:
 
 
 def get_settings() -> Settings:
-    """
-    Get configuration settings.
-    
-    Attempts to load from config.py file first, then falls back to defaults.
-    Environment variables can override specific settings.
-    
-    Returns:
-        Settings: Configured settings object
-    """
     settings = Settings()
     
     # Try to load from config.py
@@ -68,12 +50,6 @@ def get_settings() -> Settings:
 
 
 def get_config_warning() -> Optional[str]:
-    """
-    Get configuration warning message if config.py was not found.
-    
-    Returns:
-        Optional[str]: Warning message or None if config was loaded successfully.
-    """
     try:
         import config
         return None

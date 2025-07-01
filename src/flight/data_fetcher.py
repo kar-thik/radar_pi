@@ -1,10 +1,3 @@
-"""
-Flight data fetcher for retrieving aircraft information from ADS-B API.
-
-This module handles all HTTP requests to the ADS-B Exchange API and provides
-robust error handling and retry mechanisms.
-"""
-
 import requests
 from typing import Optional, Dict, Any
 from datetime import datetime
@@ -14,15 +7,7 @@ from ..config.settings import Settings
 
 
 class FlightDataFetcher:
-    """Handles fetching flight data from the ADS-B Exchange API."""
-    
     def __init__(self, settings: Settings):
-        """
-        Initialize the flight data fetcher.
-        
-        Args:
-            settings: Configuration settings object
-        """
         self.settings = settings
         self.session = requests.Session()
         self.session.timeout = settings.api_timeout
@@ -33,17 +18,6 @@ class FlightDataFetcher:
         lon: Optional[float] = None, 
         radius: Optional[int] = None
     ) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve information about aircraft closest to the specified coordinates.
-        
-        Args:
-            lat: Latitude. Defaults to settings value.
-            lon: Longitude. Defaults to settings value.
-            radius: Search radius in nautical miles. Defaults to settings value.
-        
-        Returns:
-            Dict containing flight information or None if request fails.
-        """
         # Use provided parameters or fall back to settings
         latitude = lat if lat is not None else self.settings.latitude
         longitude = lon if lon is not None else self.settings.longitude
@@ -72,6 +46,5 @@ class FlightDataFetcher:
             return None
     
     def __del__(self):
-        """Clean up the session when the fetcher is destroyed."""
         if hasattr(self, 'session'):
-            self.session.close() 
+            self.session.close()

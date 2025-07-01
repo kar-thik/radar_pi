@@ -1,9 +1,3 @@
-"""
-Data models for flight information.
-
-This module defines the data structures used throughout the flight tracking system.
-"""
-
 from dataclasses import dataclass
 from typing import Optional, List, Dict, Any
 from datetime import datetime
@@ -11,8 +5,6 @@ from datetime import datetime
 
 @dataclass
 class Aircraft:
-    """Represents a single aircraft with its flight information."""
-    
     flight_number: str
     model: str
     registration: str
@@ -27,7 +19,6 @@ class Aircraft:
     
     @classmethod
     def from_api_data(cls, data: Dict[str, Any]) -> 'Aircraft':
-        """Create Aircraft instance from API response data."""
         # Handle flight number - use hex code if flight is empty/None
         flight = data.get('flight', '').strip() if data.get('flight') else ''
         if not flight:
@@ -49,7 +40,6 @@ class Aircraft:
         )
     
     def to_display_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary format suitable for display components."""
         return {
             "flightNumber": self.flight_number,
             "model": self.model,
@@ -59,7 +49,6 @@ class Aircraft:
         }
     
     def format_info(self) -> str:
-        """Format aircraft information as a readable string."""
         return (
             f"Callsign: {self.flight_number}, "
             f"Altitude: {self.altitude or 'Unknown'} ft, "
@@ -71,8 +60,6 @@ class Aircraft:
 
 @dataclass
 class FlightData:
-    """Represents flight data response with multiple aircraft."""
-    
     aircraft: List[Aircraft]
     timestamp: datetime
     total_count: int
@@ -82,11 +69,9 @@ class FlightData:
     
     @property
     def primary_aircraft(self) -> Optional[Aircraft]:
-        """Get the primary (first) aircraft for display."""
         return self.aircraft[0] if self.aircraft else None
     
     def to_json_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary format for JSON serialization."""
         primary = self.primary_aircraft
         if not primary:
             return {
@@ -105,4 +90,4 @@ class FlightData:
             "lastUpdated": self.timestamp.isoformat(),
             "totalAircraft": self.total_count
         })
-        return data 
+        return data
