@@ -245,3 +245,16 @@ next-env.d.ts
 
 # Generated images (uncomment if you don't want to track generated images)
 # image.png
+
+# Local configuration
+config.py
+
+# Log files
+radar.log
+
+# Python virtual environment
+.venv/
+venv/
+*.venv
+**/__pycache__/
+*.pyc

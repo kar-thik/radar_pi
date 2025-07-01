@@ -56,4 +56,49 @@ This guide assumes you've already set up your Raspberry Pi and have installed th
     ./run_radar.sh
     ```
 
-That's it. Now you can also stare out your window at planes, but with more steps. 
+That's it. Now you can also stare out your window at planes, but with more steps.
+
+## Optional: Run as a Startup Service
+
+If you want the Radar Pi to automatically start on boot and refresh periodically, you can set it up as a `systemd` service. A script is provided to automate this setup.
+
+The setup script will:
+1. Create a `systemd` service that runs the main script when the Raspberry Pi boots up.
+2. Add a `cronjob` that runs the script every 4 minutes to refresh the flight data.
+
+### To set up the service:
+
+1.  **Make sure the setup script is executable:**
+    ```bash
+    chmod +x scripts/setup_service.sh
+    ```
+
+2.  **Run the setup script:**
+    ```bash
+    ./scripts/setup_service.sh
+    ```
+    You will be prompted for your password as the script needs `sudo` privileges to create and enable the service.
+    
+    By default, the cronjob is set to refresh every 4 minutes. You can customize this by passing a number as an argument to the script. For example, to set the refresh period to 10 minutes, run:
+    ```bash
+    ./scripts/setup_service.sh 10
+    ```
+
+### Service Management
+
+Once the service is set up, you can manage it using standard `systemctl` commands:
+
+-   **Check the status of the service:**
+    ```bash
+    sudo systemctl status radarpi.service
+    ```
+-   **Stop the service:**
+    ```bash
+    sudo systemctl stop radarpi.service
+    ```
+-   **Start the service:**
+    ```bash
+    sudo systemctl start radarpi.service
+    ```
+
+To view or manage the cronjob, use `crontab -l` to list jobs and `crontab -e` to edit them. 
