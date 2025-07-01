@@ -1,3 +1,3 @@
-from .image_generator import ImageGenerator
+from .html_image_generator import HTMLImageGenerator
 
-__all__ = ["ImageGenerator"] 
+__all__ = ["HTMLImageGenerator"] 
