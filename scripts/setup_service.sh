@@ -53,7 +53,8 @@ REFRESH_PERIOD=${1:-4}
 
 # Setup cronjob for refreshing
 echo "Setting up cronjob to refresh flight data every ${REFRESH_PERIOD} minutes..."
-CRON_JOB="*/${REFRESH_PERIOD} * * * * /bin/bash ${RUN_SCRIPT}"
+LOG_FILE="${PROJECT_DIR}/radar.log"
+CRON_JOB="*/${REFRESH_PERIOD} * * * * cd ${PROJECT_DIR} && /bin/bash ${RUN_SCRIPT} >> ${LOG_FILE} 2>&1"
 TEMP_CRON_FILE=$(mktemp)
 
 # Safely add the cronjob, avoiding duplicates
@@ -68,4 +69,5 @@ fi
 rm "${TEMP_CRON_FILE}"
 
 echo "Cronjob setup is complete."
-echo "You can view your cronjobs with: crontab -l" 
+echo "You can view your cronjobs with: crontab -l"
+echo "Log file created at: ${LOG_FILE}" 
