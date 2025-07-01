@@ -12,10 +12,10 @@ import sys
 import os
 
 # Add src directory to Python path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
-from services.flight_service import FlightService
-from config.settings import get_settings, get_config_warning
+from src.services.flight_service import FlightService
+from src.config.settings import get_settings, get_config_warning
 
 # Keep original function signatures for backwards compatibility
 def get_closest_flights(lat=None, lon=None, radius=None):

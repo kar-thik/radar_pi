@@ -12,11 +12,11 @@ import sys
 import os
 
 # Add src directory to Python path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
-from services.radar_service import RadarService
-from display.image_generator import ImageGenerator
-from config.settings import get_settings
+from src.services.radar_service import RadarService
+from src.display.image_generator import ImageGenerator
+from src.config.settings import get_settings
 
 # Legacy class kept for backwards compatibility
 class FlightDisplayImageGenerator:
