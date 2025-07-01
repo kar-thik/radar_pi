@@ -74,6 +74,15 @@
              font-size: 4rem; /* 64px - Even larger for the primary identifier */
         }
 
+        /* Color styling for 7-color e-ink display */
+        .airline-code {
+            color: #DC2626; /* Red color optimized for e-ink */
+        }
+        
+        .flight-digits {
+            color: #6B7280; /* Gray color for flight numbers */
+        }
+
         /* Specific styling for units to be less prominent */
         .data-block .value .unit {
             font-size: 1.5rem; /* 24px */
@@ -124,6 +133,29 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Function to split flight number into airline code and digits
+        function colorizeFlightNumber() {
+            const flightElement = document.getElementById('flight-number');
+            const flightNumber = flightElement.textContent.trim();
+            
+            // Match airline code (2-3 letters) and flight number (remaining digits)
+            const match = flightNumber.match(/^([A-Z]{2,3})(\d+.*)$/);
+            
+            if (match) {
+                const airlineCode = match[1];
+                const flightDigits = match[2];
+                
+                // Replace content with colored spans
+                flightElement.innerHTML = 
+                    `<span class="airline-code">${airlineCode}</span><span class="flight-digits">${flightDigits}</span>`;
+            }
+        }
+        
+        // Run the colorization when the page loads
+        document.addEventListener('DOMContentLoaded', colorizeFlightNumber);
+    </script>
 
 </body>
 </html> 
