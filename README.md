@@ -1,149 +1,59 @@
-# Radar Pi - Flight Tracking & Display Module
+# Radar Pi
 
-A comprehensive Python module for tracking nearby aircraft using ADS-B data from the ADS-B Exchange API and generating visual flight information displays.
+![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Status](https://img.shields.io/badge/status-in_development-orange.svg)
 
-## Setup
+I built this app because I had a Raspberry Pi and an E-ink display lying around, and I'm a huge plane nerd. From my apartment, I can see planes landing at DCA, and this app uses a waypoint I've set on the approach path. It finds the closest plane to those coordinates, and by the time the painfully slow e-ink display updates, I can look out my window and see the actual plane. It's basically magic, but with more Python and API calls.
 
-1. **Create configuration file**: Copy `config.py.example` to `config.py` and update with your desired coordinates:
-   ```bash
-   cp config.py.example config.py
-   ```
+The flight data comes from the nice people at [adsb.lol](https://adsb.lol/about).
 
-2. **Edit coordinates**: Open `config.py` and set your latitude, longitude, and search radius:
-   ```python
-   LATITUDE = 38.89580240857114    # Your latitude
-   LONGITUDE = -77.09308316546287  # Your longitude
-   RADIUS = 10                     # Search radius in nautical miles
-   ```
+## Hardware
 
-3. **Install dependencies**:
-   ```bash
-   # For flight tracking only
-   pip install requests
-   
-   # For flight tracking + image generation
-   pip install -r requirements.txt
-   ```
+- A Raspberry Pi (any model with a 40-pin header should work).
+- An Inky Impression 7.3" e-paper display. You can get one [here](https://shop.pimoroni.com/products/inky-impression-7-3?variant=55186435244411).
+- The necessary drivers for the display, which you can find [here](https://github.com/pimoroni/inky).
 
-## Usage
+## Getting Started
 
-### Flight Tracking
+### Prerequisites
 
-#### As a standalone script:
-```bash
-python get_flights.py
-```
+This guide assumes you've already set up your Raspberry Pi and have installed the Pimoroni Inky library in the default path (`~/.virtualenvs/pimoroni/`). If you haven't, please follow the instructions on the [Pimoroni Inky GitHub page](https://github.com/pimoroni/inky).
 
-#### As a module in your code:
-```python
-import get_flights
+### Installation & Running
 
-# Use default config values
-flight_data = get_flights.get_closest_flights()
-get_flights.print_flight_info(flight_data)
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/radar-pi.git
+    cd radar-pi
+    ```
 
-# Or specify custom coordinates
-flight_data = get_flights.get_closest_flights(lat=40.7128, lon=-74.0060, radius=15)
-```
+2.  **Activate the Pimoroni virtual environment:**
+    ```bash
+    source ~/.virtualenvs/pimoroni/bin/activate
+    ```
 
-### Integrated Flight Display Generation (Recommended)
+3.  **Install the Python dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+    
+4.  **(Optional) Configure your location:**
+    
+    If you don't want to track planes landing at DCA, you can create a `config.py` file in the root directory and set your own coordinates.
+    
+    ```bash
+    cp config.py.example config.py
+    ```
+    
+    Then edit `config.py` with your desired latitude, longitude, and search radius.
 
-Generate a live flight information display with real-time data:
+5.  **Run the script:**
+    
+    The main script will fetch flight data, generate an image, and display it on the Inky screen.
+    
+    ```bash
+    ./run_radar.sh
+    ```
 
-```bash
-python run_flight_display.py
-```
-
-Or use the integrated module directly:
-```bash
-python integrated_flight_display.py
-```
-
-This will:
-- Fetch live flight data from nearby aircraft using ADS-B Exchange API
-- Create a Next.js project with dynamic React components
-- Pass real flight data to the display components
-- Start a local development server
-- Render the live flight information display using headless Chrome
-- Capture a screenshot as `curr_flight.png`
-- Automatically clean up temporary files and server
-
-### Static Flight Display Image Generation
-
-Generate a visual 800×480px flight information display with static data:
-
-```bash
-python generate_image.py
-```
-
-This will:
-- Create a Next.js project with React components
-- Start a local development server
-- Render the flight information display using headless Chrome
-- Capture a screenshot as `image.png`
-- Automatically clean up the server
-
-The generated image includes:
-- Flight number, aircraft model, and registration
-- Ground speed in knots
-- Number of nearby aircraft
-- Data timestamp and current time
-- Clean, modern light-themed interface
-- Exact 800×480 pixel dimensions
-
-## Features
-
-### Flight Tracking
-- **Configurable location**: Set your coordinates in a separate config file
-- **Modular design**: Can be used as both a script and importable module  
-- **Error handling**: Graceful handling of API errors and missing config
-- **Formatted output**: Clean display of aircraft information
-- **Type hints**: Full type annotations for better code clarity
-
-### Flight Display Generation
-- **Visual flight displays**: Generate 800×480px images of flight information
-- **React components**: Modern, responsive UI built with Next.js and Tailwind CSS
-- **Headless rendering**: Uses Playwright for automated screenshot capture
-- **Light theme**: Clean, professional appearance optimized for displays
-- **Automated workflow**: Complete setup, rendering, and cleanup process
-- **Customizable data**: Easy to modify flight information through React props
-
-## Project Structure
-
-```
-radar_pi/
-├── get_flights.py                    # Flight tracking module
-├── generate_image.py                 # Static image generation script
-├── integrated_flight_display.py     # Live flight display generator
-├── run_flight_display.py            # Simple runner script
-├── config.py.example                # Configuration template
-├── requirements.txt                  # Python dependencies
-├── package.json                      # Node.js dependencies
-├── app/                              # Next.js application
-│   ├── layout.tsx                    # Root layout component
-│   ├── page.tsx                      # Dynamic home page
-│   ├── globals.css                   # Global styles
-│   └── api/                          # API routes
-│       └── flight-data/
-│           └── route.ts              # Flight data API endpoint
-└── components/                       # React components
-    └── flight-info-display.tsx      # Enhanced flight display component
-```
-
-## Dependencies
-
-### Python Dependencies
-- `requests`: For API calls to ADS-B Exchange
-- `playwright`: For headless browser automation
-- `asyncio`: For asynchronous operations
-
-### Node.js Dependencies
-- `next`: React framework for the web interface
-- `react`: User interface library
-- `tailwindcss`: Utility-first CSS framework
-- `lucide-react`: Icon library
-- `typescript`: Type safety for JavaScript
-
-## Security
-
-The `config.py` file is automatically ignored by git to prevent accidentally committing location data. Use `config.py.example` as a template for your configuration.
+That's it. Now you can also stare out your window at planes, but with more steps. 
