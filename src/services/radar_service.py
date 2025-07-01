@@ -10,7 +10,7 @@ from typing import Optional
 
 from ..config.settings import Settings, get_settings
 from ..flight.models import FlightData
-from ..display.image_generator import ImageGenerator
+from ..display.html_image_generator import HTMLImageGenerator
 from .flight_service import FlightService
 
 
@@ -26,7 +26,7 @@ class RadarService:
         """
         self.settings = settings or get_settings()
         self.flight_service = FlightService(self.settings)
-        self.image_generator = ImageGenerator(self.settings)
+        self.image_generator = HTMLImageGenerator(self.settings)
     
     def get_flight_data(self, **kwargs) -> Optional[FlightData]:
         """
